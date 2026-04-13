@@ -3,9 +3,9 @@ import path from "path"
 import matter from "gray-matter"
 import { remark } from "remark"
 import html from "remark-html"
-import { CATEGORIAS } from "./categorias"
+import { CATEGORIAS, CATEGORIA_SLUGS } from "./categorias"
 
-export { CATEGORIAS } from "./categorias"
+export { CATEGORIAS, CATEGORIA_SLUGS } from "./categorias"
 export type { CategoriaConfig } from "./categorias"
 
 const postsDirectory = path.join(process.cwd(), "posts")
@@ -108,7 +108,7 @@ export function formatDate(dateStr: string): string {
 export function getPostCountByCategoria(): Record<string, number> {
   const posts = getSortedPosts()
   const counts: Record<string, number> = {}
-  for (const cat of Object.keys(CATEGORIAS)) {
+  for (const cat of CATEGORIA_SLUGS) {
     counts[cat] = posts.filter((p) => p.categoria === cat).length
   }
   return counts

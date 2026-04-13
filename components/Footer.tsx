@@ -1,12 +1,5 @@
 import Link from "next/link"
-
-const CATS = [
-  { slug: "mentalidad",  label: "Pensar diferente" },
-  { slug: "negocios",    label: "Negocios" },
-  { slug: "decisiones",  label: "Decisiones" },
-  { slug: "inversiones", label: "Inversiones" },
-  { slug: "habilidades", label: "Habilidades" },
-]
+import { CATEGORIAS, CATEGORIA_SLUGS } from "@/lib/categorias"
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -20,10 +13,10 @@ export default function Footer() {
             </p>
             <p className="footer-copy">Empecé esto con 13 años.</p>
           </div>
-          <nav className="footer-nav" aria-label="Categorías del blog">
-            {CATS.map((c) => (
-              <Link key={c.slug} href={`/categoria/${c.slug}`} className="footer-nav-link">
-                {c.label}
+          <nav className="footer-nav" aria-label="Secciones del blog">
+            {CATEGORIA_SLUGS.map((slug) => (
+              <Link key={slug} href={`/${slug}`} className="footer-nav-link">
+                {CATEGORIAS[slug]?.nombre}
               </Link>
             ))}
             <Link href="/sobre" className="footer-nav-link">Sobre mí</Link>

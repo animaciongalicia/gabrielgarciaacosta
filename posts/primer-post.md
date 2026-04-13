@@ -1,7 +1,7 @@
 ---
 title: "Por qué tengo este blog con 13 años"
 date: "2026-03-01"
-categoria: "sobre-mi"
+categoria: "mentalidad"
 resumen: "Este blog no es para hacerme famoso ni para que me lea mucha gente. Es para dejar escrito lo que voy aprendiendo. Para que dentro de años pueda volver aquí y ver cómo pensaba."
 imagen: "/og/primer-post.jpg"
 ---

@@ -2,9 +2,7 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
-import { CATEGORIAS } from "@/lib/categorias"
-
-const NAV_CATS = ["mentalidad", "negocios", "decisiones", "inversiones", "habilidades"]
+import { CATEGORIAS, CATEGORIA_SLUGS } from "@/lib/categorias"
 
 export default function Header() {
   const [theme, setTheme] = useState<"light" | "dark">("light")
@@ -40,12 +38,12 @@ export default function Header() {
               <span>Gabriel</span>
             </Link>
 
-            <nav className="header-nav" aria-label="Categorías">
-              {NAV_CATS.map((slug) => (
+            <nav className="header-nav" aria-label="Secciones">
+              {CATEGORIA_SLUGS.map((slug) => (
                 <Link
                   key={slug}
-                  href={`/categoria/${slug}`}
-                  className={`nav-link${isActive(`/categoria/${slug}`) ? " active" : ""}`}
+                  href={`/${slug}`}
+                  className={`nav-link${isActive(`/${slug}`) ? " active" : ""}`}
                 >
                   {CATEGORIAS[slug]?.nombre}
                 </Link>
@@ -88,18 +86,17 @@ export default function Header() {
       </header>
 
       <nav className={`mobile-nav${menuOpen ? " open" : ""}`} aria-label="Menú móvil">
-        {NAV_CATS.map((slug) => (
+        {CATEGORIA_SLUGS.map((slug) => (
           <Link
             key={slug}
-            href={`/categoria/${slug}`}
-            className={`nav-link${isActive(`/categoria/${slug}`) ? " active" : ""}`}
+            href={`/${slug}`}
+            className={`nav-link${isActive(`/${slug}`) ? " active" : ""}`}
           >
-            <span style={{ marginRight: "8px" }}>{CATEGORIAS[slug]?.icono}</span>
             {CATEGORIAS[slug]?.nombre}
           </Link>
         ))}
         <Link href="/sobre" className={`nav-link${isActive("/sobre") ? " active" : ""}`}>
-          👤 Sobre mí
+          Sobre mí
         </Link>
       </nav>
     </>

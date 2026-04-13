@@ -1,17 +1,15 @@
 import Link from "next/link"
-import { getSortedPosts, formatDate, CATEGORIAS, getPostCountByCategoria } from "@/lib/posts"
 import type { Metadata } from "next"
+import { getSortedPosts, formatDate } from "@/lib/posts"
+import { CATEGORIAS } from "@/lib/categorias"
 
 export const metadata: Metadata = {
   title: "Gabriel García Acosta — Aprendiendo a pensar diferente",
   alternates: { canonical: "https://gabrielgarciaacosta.com" },
 }
 
-const CATS_GRID = ["mentalidad", "negocios", "decisiones", "inversiones", "habilidades"]
-
 export default function Home() {
   const posts = getSortedPosts()
-  const counts = getPostCountByCategoria()
 
   return (
     <>
@@ -31,41 +29,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="categories-section" aria-labelledby="cats-heading">
-        <div className="container">
-          <p className="section-label" id="cats-heading">Secciones</p>
-          <div className="categories-grid">
-            {CATS_GRID.map((slug) => {
-              const cat = CATEGORIAS[slug]
-              if (!cat) return null
-              return (
-                <Link
-                  key={slug}
-                  href={`/categoria/${slug}`}
-                  className="category-card"
-                  style={{ "--cat-bg": cat.bg, "--cat-border": cat.border, "--cat-text": cat.text } as React.CSSProperties}
-                  aria-label={`${cat.nombre} — ${counts[slug] ?? 0} ${(counts[slug] ?? 0) === 1 ? "entrada" : "entradas"}`}
-                >
-                  <span className="cat-icon" aria-hidden="true">{cat.icono}</span>
-                  <span className="cat-name">{cat.nombre}</span>
-                  <span className="cat-count">
-                    {counts[slug] ?? 0} {(counts[slug] ?? 0) === 1 ? "entrada" : "entradas"}
-                  </span>
-                </Link>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="posts-section" aria-labelledby="posts-heading">
+      <section className="section divider-top" aria-labelledby="posts-heading">
         <div className="container">
           <div className="section-header">
             <h2 className="section-title" id="posts-heading">Últimas entradas</h2>
-            <span className="section-meta">{posts.length} publicadas</span>
+            <span className="section-meta">
+              {posts.length} {posts.length === 1 ? "publicada" : "publicadas"}
+            </span>
           </div>
+
           {posts.length === 0 ? (
-            <div className="empty-state"><p>Aún no hay entradas. Vuelve pronto.</p></div>
+            <div className="empty-state">
+              <p>Aún no hay entradas. Vuelve pronto.</p>
+            </div>
           ) : (
             <ul className="posts-list" role="list">
               {posts.map((post) => {
@@ -76,18 +52,18 @@ export default function Home() {
                       <div className="post-body">
                         {cat && (
                           <span
-                            className="post-cat-badge"
-                            style={{ "--badge-bg": cat.bg, "--badge-border": cat.border, "--badge-text": cat.text } as React.CSSProperties}
+                            className="post-cat-label"
+                            style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
                           >
-                            {cat.icono} {cat.nombre}
+                            {cat.nombre}
                           </span>
                         )}
                         <h3 className="post-title">{post.title}</h3>
                         <p className="post-excerpt">{post.resumen}</p>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0 }}>
+                      <div className="post-meta-right">
                         <time className="post-date" dateTime={post.date}>{formatDate(post.date)}</time>
-                        <span className="post-date">{post.readingTime} min</span>
+                        <span className="post-reading-time">{post.readingTime} min</span>
                       </div>
                     </Link>
                   </li>
@@ -103,11 +79,14 @@ export default function Home() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org", "@type": "Blog",
-            name: "Gabriel García Acosta", url: "https://gabrielgarciaacosta.com",
+            name: "Gabriel García Acosta",
+            url: "https://gabrielgarciaacosta.com",
             description: "Blog personal de Gabriel García Acosta. Aprendizaje sobre negocios, inversiones y mentalidad desde los 13 años.",
             inLanguage: "es",
             author: {
-              "@type": "Person", name: "Gabriel García Acosta", url: "https://gabrielgarciaacosta.com",
+              "@type": "Person",
+              name: "Gabriel García Acosta",
+              url: "https://gabrielgarciaacosta.com",
               description: "Estudiante de 1º ESO en A Coruña. Escribe sobre negocios, decisiones e inversiones.",
               address: { "@type": "PostalAddress", addressLocality: "A Coruña", addressRegion: "Galicia", addressCountry: "ES" },
             },

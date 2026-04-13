@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
-import { getSortedPosts, CATEGORIAS } from '@/lib/posts'
+import { getSortedPosts } from '@/lib/posts'
+import { CATEGORIA_SLUGS } from '@/lib/categorias'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getSortedPosts()
@@ -12,8 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  const catEntries: MetadataRoute.Sitemap = Object.keys(CATEGORIAS).map((slug) => ({
-    url: `${BASE}/categoria/${slug}`,
+  const pillarEntries: MetadataRoute.Sitemap = CATEGORIA_SLUGS.map((slug) => ({
+    url: `${BASE}/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.7,
@@ -21,7 +22,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: BASE, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    ...catEntries,
+    { url: `${BASE}/sobre`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    ...pillarEntries,
     ...postEntries,
   ]
 }

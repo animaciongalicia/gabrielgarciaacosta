@@ -1,7 +1,8 @@
 import Link from "next/link"
-import { getPost, getAllSlugs, formatDate, CATEGORIAS, getRelatedPosts, getAdjacentPosts } from "@/lib/posts"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { getPost, getAllSlugs, formatDate, getRelatedPosts, getAdjacentPosts } from "@/lib/posts"
+import { CATEGORIAS } from "@/lib/categorias"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -17,10 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const post = await getPost(slug)
     const cat = CATEGORIAS[post.categoria]
     return {
-      // ✅ Fix: sin duplicar nombre — el template "%s | Gabriel García Acosta" lo añade
       title: post.title,
       description: post.resumen,
-      // ✅ Fix: keywords específicos por post desde el frontmatter
       keywords: post.keywords,
       alternates: { canonical: `https://gabrielgarciaacosta.com/blog/${slug}` },
       openGraph: {
@@ -32,7 +31,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         section: cat?.nombre,
         images: post.imagen ? [{ url: post.imagen, width: 1200, height: 630, alt: post.title }] : [],
       },
-      // ✅ Fix: twitter:title usa el título del artículo, no el nombre del autor
       twitter: {
         card: "summary_large_image",
         title: post.title,
@@ -61,14 +59,14 @@ export default async function BlogPost({ params }: Props) {
 
   return (
     <>
-      <header className="article-header">
-        <div className="container container--narrow">
+      <header className="page-header">
+        <div className="container">
           <nav className="breadcrumbs" aria-label="Breadcrumb">
             <Link href="/">Inicio</Link>
             <span className="sep" aria-hidden="true">›</span>
             {cat && (
               <>
-                <Link href={`/categoria/${cat.slug}`}>{cat.nombre}</Link>
+                <Link href={`/${cat.slug}`}>{cat.nombre}</Link>
                 <span className="sep" aria-hidden="true">›</span>
               </>
             )}
@@ -78,15 +76,15 @@ export default async function BlogPost({ params }: Props) {
           <div className="article-meta">
             {cat && (
               <Link
-                href={`/categoria/${cat.slug}`}
-                className="article-cat-badge"
-                style={{ "--badge-bg": cat.bg, "--badge-border": cat.border, "--badge-text": cat.text } as React.CSSProperties}
+                href={`/${cat.slug}`}
+                className="article-cat-link"
+                style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
               >
-                {cat.icono} {cat.nombre}
+                {cat.nombre}
               </Link>
             )}
-            <time className="article-date" dateTime={post.date}>{formatDate(post.date)}</time>
-            <span className="article-reading-time">{post.readingTime} min de lectura</span>
+            <time dateTime={post.date}>{formatDate(post.date)}</time>
+            <span>{post.readingTime} min de lectura</span>
           </div>
 
           <h1 className="article-title">{post.title}</h1>
@@ -94,50 +92,69 @@ export default async function BlogPost({ params }: Props) {
         </div>
       </header>
 
-      <article className="article-content">
-        <div className="container container--narrow">
+      <article className="section divider-top">
+        <div className="container">
           <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }} />
-
-          {related.length > 0 && (
-            <aside className="related-posts" aria-labelledby="related-heading">
-              <h2 className="related-title" id="related-heading">Leer también</h2>
-              <div className="related-grid">
-                {related.map((r) => {
-                  const rCat = CATEGORIAS[r.categoria]
-                  return (
-                    <Link key={r.slug} href={`/blog/${r.slug}`} className="related-card">
-                      <span className="related-card-cat">{rCat?.icono} {rCat?.nombre}</span>
-                      <span className="related-card-title">{r.title}</span>
-                      <span className="related-card-date">{r.readingTime} min de lectura</span>
-                    </Link>
-                  )
-                })}
-              </div>
-            </aside>
-          )}
 
           {(prev || next) && (
             <nav className="post-nav" aria-label="Navegación entre entradas">
-              {prev && (
+              {prev ? (
                 <Link href={`/blog/${prev.slug}`} className="post-nav-link prev">
                   <span className="post-nav-label">← Anterior</span>
                   <span className="post-nav-title">{prev.title}</span>
                 </Link>
-              )}
-              {next && (
+              ) : <span />}
+              {next ? (
                 <Link href={`/blog/${next.slug}`} className="post-nav-link next">
                   <span className="post-nav-label">Siguiente →</span>
                   <span className="post-nav-title">{next.title}</span>
                 </Link>
-              )}
+              ) : <span />}
             </nav>
           )}
 
-          <div style={{ marginTop: "var(--space-10)", paddingTop: "var(--space-6)", borderTop: "1px solid var(--color-divider)" }}>
-            <Link href={`/categoria/${post.categoria}`} className="article-back">
-              ← Volver a {cat?.nombre ?? "la sección"}
-            </Link>
-          </div>
+          {related.length > 0 && (
+            <aside style={{ marginTop: "var(--space-16)", paddingTop: "var(--space-10)", borderTop: "1px solid var(--color-divider)" }}>
+              <div className="section-header" style={{ marginBottom: "var(--space-6)" }}>
+                <h2 className="section-title">Leer también</h2>
+                {cat && (
+                  <Link
+                    href={`/${cat.slug}`}
+                    style={{ fontSize: "var(--text-xs)", color: "var(--color-text-faint)", textTransform: "uppercase", letterSpacing: "0.05em" }}
+                  >
+                    Ver sección →
+                  </Link>
+                )}
+              </div>
+              <ul className="posts-list" role="list">
+                {related.map((r) => {
+                  const rCat = CATEGORIAS[r.categoria]
+                  return (
+                    <li key={r.slug}>
+                      <Link href={`/blog/${r.slug}`} className="post-card">
+                        <div className="post-body">
+                          {rCat && (
+                            <span
+                              className="post-cat-label"
+                              style={{ "--cat-color": `var(--cat-${r.categoria})` } as React.CSSProperties}
+                            >
+                              {rCat.nombre}
+                            </span>
+                          )}
+                          <h3 className="post-title">{r.title}</h3>
+                          <p className="post-excerpt">{r.resumen}</p>
+                        </div>
+                        <div className="post-meta-right">
+                          <time className="post-date" dateTime={r.date}>{formatDate(r.date)}</time>
+                          <span className="post-reading-time">{r.readingTime} min</span>
+                        </div>
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </aside>
+          )}
         </div>
       </article>
 
@@ -159,7 +176,7 @@ export default async function BlogPost({ params }: Props) {
               "@context": "https://schema.org", "@type": "BreadcrumbList",
               itemListElement: [
                 { "@type": "ListItem", position: 1, name: "Inicio", item: BASE },
-                ...(cat ? [{ "@type": "ListItem", position: 2, name: cat.nombre, item: `${BASE}/categoria/${cat.slug}` }] : []),
+                ...(cat ? [{ "@type": "ListItem", position: 2, name: cat.nombre, item: `${BASE}/${cat.slug}` }] : []),
                 { "@type": "ListItem", position: cat ? 3 : 2, name: post.title, item: `${BASE}/blog/${post.slug}` },
               ],
             },
