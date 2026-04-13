@@ -3,6 +3,10 @@ import path from 'path'
 import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
+import { CATEGORIAS } from './categorias'
+
+export { CATEGORIAS } from './categorias'
+export type { CategoriaConfig } from './categorias'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -18,6 +22,8 @@ export interface PostMeta {
 export interface Post extends PostMeta {
   content: string
 }
+
+// ---- FUNCIONES ----
 
 export function getSortedPosts(): PostMeta[] {
   const fileNames = fs.readdirSync(postsDirectory)
@@ -37,8 +43,17 @@ export function getSortedPosts(): PostMeta[] {
         imagen: data.imagen,
       } as PostMeta
     })
-
   return allPosts.sort((a, b) => (a.date < b.date ? 1 : -1))
+}
+
+export function getPostsByCategoria(categoria: string): PostMeta[] {
+  return getSortedPosts().filter((p) => p.categoria === categoria)
+}
+
+export function getRelatedPosts(currentSlug: string, categoria: string, limit = 3): PostMeta[] {
+  return getSortedPosts()
+    .filter((p) => p.slug !== currentSlug && p.categoria === categoria)
+    .slice(0, limit)
 }
 
 export function getAllSlugs(): string[] {
@@ -50,10 +65,8 @@ export async function getPost(slug: string): Promise<Post> {
   const fullPath = path.join(postsDirectory, `${slug}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
-
   const processedContent = await remark().use(html).process(content)
   const contentHtml = processedContent.toString()
-
   return {
     slug,
     title: data.title,
@@ -66,7 +79,7 @@ export async function getPost(slug: string): Promise<Post> {
 }
 
 export function formatDate(dateStr: string): string {
-  const date = new Date(dateStr)
+  const date = new Date(dateStr + 'T00:00:00')
   return date.toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'long',
@@ -74,10 +87,12 @@ export function formatDate(dateStr: string): string {
   })
 }
 
-export const CATEGORIAS: Record<string, string> = {
-  negocios: 'Negocios',
-  decisiones: 'Decisiones',
-  'sobre-mi': 'Sobre mí',
-  aprendizaje: 'Aprendizaje',
-  inversiones: 'Inversiones',
+// Conteo de posts por categoría para mostrar en el grid
+export function getPostCountByCategoria(): Record<string, number> {
+  const posts = getSortedPosts()
+  const counts: Record<string, number> = {}
+  for (const cat of Object.keys(CATEGORIAS)) {
+    counts[cat] = posts.filter((p) => p.categoria === cat).length
+  }
+  return counts
 }
