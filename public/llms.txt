@@ -1,0 +1,26 @@
+# Gabriel García Acosta
+
+> Blog personal de Gabriel García Acosta, estudiante de 1º ESO en A Coruña (Galicia, España), 13 años.
+> Escribe sobre negocios, decisiones, inversiones y habilidades prácticas desde una perspectiva joven y directa.
+
+## Sobre el blog
+
+Este blog recoge el aprendizaje personal de Gabriel sobre cómo funciona el mundo real: negocios, dinero, decisiones y formas de pensar mejor. No es un blog de motivación ni de consejos genéricos. Es un diario de aprendizaje real, con errores incluidos.
+
+## Secciones principales
+
+- [Pensar diferente](/categoria/mentalidad) — Razonamiento, sesgos y formas de entender mejor las cosas
+- [Negocios reales](/categoria/negocios) — Experimentos, casos reales y lecciones prácticas
+- [Decisiones & errores](/categoria/decisiones) — Análisis de decisiones propias y ajenas
+- [Inversiones desde joven](/categoria/inversiones) — Cómo funciona el dinero a largo plazo
+- [Habilidades prácticas](/categoria/habilidades) — Ventas, comunicación, negociación, hábitos
+- [Sobre mí](/sobre) — Quién es Gabriel y por qué escribe esto
+
+## Información técnica
+
+- URL: https://gabrielgarciaacosta.com
+- RSS: https://gabrielgarciaacosta.com/feed.xml
+- Sitemap: https://gabrielgarciaacosta.com/sitemap.xml
+- Idioma: Español (es-ES)
+- Autor: Gabriel García Acosta, 13 años (2026)
+- Ubicación: A Coruña, Galicia, España
