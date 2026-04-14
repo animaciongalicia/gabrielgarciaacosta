@@ -48,12 +48,15 @@ export default function Header() {
                   {CATEGORIAS[slug]?.nombre}
                 </Link>
               ))}
-              <Link href="/sobre" className={`nav-link${isActive("/sobre") ? " active" : ""}`}>
-                Sobre mí
-              </Link>
             </nav>
 
             <div className="header-actions">
+              <Link
+                href="/sobre"
+                className={`nav-link nav-link--sobre${isActive("/sobre") ? " active" : ""}`}
+              >
+                Sobre mí
+              </Link>
               <button
                 onClick={toggleTheme}
                 className="theme-toggle"

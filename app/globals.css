@@ -275,6 +275,19 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 .nav-link:hover { color: var(--color-text); background: var(--color-surface-2); opacity: 1; }
 .nav-link.active { color: var(--color-primary); background: var(--color-primary-highlight); }
 
+/* "Sobre mí" separado visualmente del grupo de categorías */
+.nav-link--sobre {
+  margin-right: var(--space-2);
+  border-right: 1px solid var(--color-border);
+  padding-right: var(--space-4);
+  border-radius: 0;
+}
+@media (max-width: 768px) {
+  .nav-link--sobre {
+    display: none;
+  }
+}
+
 .header-actions { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
 
 .theme-toggle, .menu-toggle {
