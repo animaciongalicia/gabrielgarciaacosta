@@ -48,6 +48,12 @@ export default function Header() {
                   {CATEGORIAS[slug]?.nombre}
                 </Link>
               ))}
+              <Link
+                href="/blog"
+                className={`nav-link nav-link--blog${pathname === "/blog" ? " active" : ""}`}
+              >
+                Blog
+              </Link>
             </nav>
 
             <div className="header-actions">
@@ -92,6 +98,9 @@ export default function Header() {
             {CATEGORIAS[slug]?.nombre}
           </Link>
         ))}
+        <Link href="/blog" className={`nav-link${pathname === "/blog" ? " active" : ""}`}>
+          Blog
+        </Link>
         <Link href="/sobre" className={`nav-link${isActive("/sobre") ? " active" : ""}`}>
           Sobre mí
         </Link>
