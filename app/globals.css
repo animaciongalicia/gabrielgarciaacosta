@@ -361,7 +361,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   color: var(--color-text);
   line-height: 1.05;
   margin-bottom: var(--space-6);
-  max-width: 28ch;
+  max-width: 34ch;
   text-wrap: balance;
 }
 .hero-title em { font-style: italic; color: var(--color-primary); }
@@ -369,7 +369,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 .hero-desc {
   font-size: var(--text-lg);
   color: var(--color-text-muted);
-  max-width: 58ch;
+  max-width: 66ch;
   line-height: 1.55;
   text-wrap: pretty;
 }
@@ -406,7 +406,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   letter-spacing: -0.025em;
   color: var(--color-text);
   margin-bottom: var(--space-4);
-  max-width: 32ch;
+  max-width: 38ch;
   text-wrap: balance;
 }
 
@@ -414,7 +414,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   font-size: var(--text-lg);
   color: var(--color-text-muted);
   line-height: 1.55;
-  max-width: 62ch;
+  max-width: 70ch;
   text-wrap: pretty;
 }
 
@@ -422,7 +422,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   font-size: var(--text-base);
   color: var(--color-text-muted);
   line-height: 1.75;
-  max-width: 65ch;
+  max-width: 72ch;
 }
 .page-intro p { margin-bottom: var(--space-4); }
 .page-intro p:last-child { margin-bottom: 0; }
@@ -603,7 +603,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   line-height: 1.1;
   color: var(--color-text);
   margin-bottom: var(--space-5);
-  max-width: 32ch;
+  max-width: 38ch;
   text-wrap: balance;
 }
 
@@ -612,7 +612,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   font-size: var(--text-lg);
   color: var(--color-text-muted);
   line-height: 1.7;
-  max-width: 60ch;
+  max-width: 68ch;
 }
 
 /* Prose — contenido del artículo */
@@ -620,7 +620,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   font-size: var(--text-base);
   line-height: 1.8;
   color: var(--color-text);
-  max-width: 65ch;
+  max-width: 72ch;
 }
 .prose p, .prose ul, .prose ol { margin-bottom: var(--space-6); }
 .prose ul, .prose ol { padding-left: var(--space-6); }
@@ -972,7 +972,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  max-width: 60ch;
+  max-width: 70ch;
 }
 
 .pillar-counter {
