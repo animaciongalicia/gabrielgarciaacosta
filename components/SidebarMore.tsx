@@ -5,23 +5,16 @@ import { CATEGORIAS } from "@/lib/categorias"
 interface Props {
   posts: PostMeta[]
   currentSlug: string
-  currentSerie?: string
   currentCategoria: string
   limit?: number
 }
 
 /**
  * Selecciona hasta `limit` posts para el sidebar "Otras lecturas".
- * Criterios:
- *  - Excluye el post actual
- *  - Excluye posts de la misma serie (ya aparecen en el series-box)
- *  - Prioriza diversidad de categoría: 1 por categoría distinta a la actual primero
- *  - Rellena con más recientes del resto si faltan
+ * Prioriza diversidad de categoría, luego más recientes.
  */
-function pickPosts(posts: PostMeta[], currentSlug: string, currentSerie: string | undefined, currentCategoria: string, limit: number): PostMeta[] {
-  const eligible = posts.filter(
-    (p) => p.slug !== currentSlug && (!currentSerie || p.serie !== currentSerie)
-  )
+function pickPosts(posts: PostMeta[], currentSlug: string, currentCategoria: string, limit: number): PostMeta[] {
+  const eligible = posts.filter((p) => p.slug !== currentSlug)
 
   const byOtherCategory = new Map<string, PostMeta>()
   for (const post of eligible) {
@@ -30,18 +23,15 @@ function pickPosts(posts: PostMeta[], currentSlug: string, currentSerie: string 
     }
   }
   const diverse = Array.from(byOtherCategory.values())
-
-  // Si ya llegamos al límite con diversidad, corta.
   if (diverse.length >= limit) return diverse.slice(0, limit)
 
-  // Rellenar con el resto por fecha (ya vienen ordenados desc)
   const picked = new Set(diverse.map((p) => p.slug))
   const rest = eligible.filter((p) => !picked.has(p.slug))
   return [...diverse, ...rest].slice(0, limit)
 }
 
-export default function SidebarMore({ posts, currentSlug, currentSerie, currentCategoria, limit = 5 }: Props) {
-  const picked = pickPosts(posts, currentSlug, currentSerie, currentCategoria, limit)
+export default function SidebarMore({ posts, currentSlug, currentCategoria, limit = 5 }: Props) {
+  const picked = pickPosts(posts, currentSlug, currentCategoria, limit)
   if (picked.length === 0) return null
 
   return (
