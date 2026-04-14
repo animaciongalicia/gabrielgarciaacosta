@@ -10,6 +10,8 @@ export const metadata: Metadata = {
 
 export default function Home() {
   const posts = getSortedPosts()
+  const featured = posts[0]
+  const rest = posts.slice(1, 6)
 
   return (
     <>
@@ -29,67 +31,100 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section divider-top" aria-labelledby="posts-heading">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title" id="posts-heading">Últimas entradas</h2>
-            <span className="section-meta">
-              {posts.length} {posts.length === 1 ? "publicada" : "publicadas"}
-            </span>
-          </div>
-
-          {posts.length === 0 ? (
-            <div className="empty-state">
-              <p>Aún no hay entradas. Vuelve pronto.</p>
-            </div>
-          ) : (
-            <>
-              <ul className="posts-list" role="list">
-                {posts.slice(0, 6).map((post, i) => {
-                  const cat = CATEGORIAS[post.categoria]
-                  const isFeatured = i === 0
-                  return (
-                    <li key={post.slug}>
-                      <Link
-                        href={`/blog/${post.slug}`}
-                        className={`post-card${isFeatured ? " post-card--featured" : ""}`}
-                        style={isFeatured ? ({ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties) : undefined}
-                      >
-                        <div className="post-body">
-                          {cat && (
-                            <span
-                              className="post-cat-label"
-                              style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
-                            >
-                              {cat.nombre}
-                            </span>
-                          )}
-                          <h3 className="post-title">{post.title}</h3>
-                          <p className="post-excerpt">{post.resumen}</p>
-                        </div>
-                        <div className="post-meta-right">
-                          <time className="post-date" dateTime={post.date}>{formatDate(post.date)}</time>
-                          <span className="post-reading-time">{post.readingTime} min</span>
-                        </div>
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
-              {posts.length > 6 && (
-                <div className="posts-ver-todas">
-                  <Link href="/blog" className="posts-ver-todas-link">
-                    Ver todas las entradas ({posts.length})
+      {featured && (() => {
+        const cat = CATEGORIAS[featured.categoria]
+        return (
+          <section className="home-featured" aria-labelledby="featured-heading">
+            <div className="container">
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="home-featured-card"
+                style={{ "--cat-color": `var(--cat-${featured.categoria})` } as React.CSSProperties}
+              >
+                <span className="home-featured-eyebrow">
+                  Última entrada
+                  {cat && <><span aria-hidden="true">·</span><span className="home-featured-cat">{cat.nombre}</span></>}
+                </span>
+                <h2 className="home-featured-title" id="featured-heading">{featured.title}</h2>
+                <p className="home-featured-excerpt">{featured.resumen}</p>
+                <div className="home-featured-meta">
+                  <time dateTime={featured.date}>{formatDate(featured.date)}</time>
+                  <span aria-hidden="true">·</span>
+                  <span>{featured.readingTime} min de lectura</span>
+                  <span className="home-featured-cta">
+                    Leer
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                       <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                  </Link>
+                  </span>
                 </div>
-              )}
-            </>
-          )}
-        </div>
-      </section>
+              </Link>
+            </div>
+          </section>
+        )
+      })()}
+
+      {rest.length > 0 && (
+        <section className="section divider-top" aria-labelledby="posts-heading">
+          <div className="container">
+            <div className="section-header">
+              <h2 className="section-title" id="posts-heading">Más entradas</h2>
+              <span className="section-meta">
+                {posts.length} {posts.length === 1 ? "publicada" : "publicadas"}
+              </span>
+            </div>
+
+            <ul className="posts-list" role="list">
+              {rest.map((post) => {
+                const cat = CATEGORIAS[post.categoria]
+                return (
+                  <li key={post.slug}>
+                    <Link href={`/blog/${post.slug}`} className="post-card">
+                      <div className="post-body">
+                        {cat && (
+                          <span
+                            className="post-cat-label"
+                            style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
+                          >
+                            {cat.nombre}
+                          </span>
+                        )}
+                        <h3 className="post-title">{post.title}</h3>
+                        <p className="post-excerpt">{post.resumen}</p>
+                      </div>
+                      <div className="post-meta-right">
+                        <time className="post-date" dateTime={post.date}>{formatDate(post.date)}</time>
+                        <span className="post-reading-time">{post.readingTime} min</span>
+                      </div>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+
+            {posts.length > 6 && (
+              <div className="posts-ver-todas">
+                <Link href="/blog" className="posts-ver-todas-link">
+                  Ver todas las entradas ({posts.length})
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {posts.length === 0 && (
+        <section className="section divider-top">
+          <div className="container">
+            <div className="empty-state">
+              <p>Aún no hay entradas. Vuelve pronto.</p>
+            </div>
+          </div>
+        </section>
+      )}
 
       <script
         type="application/ld+json"
