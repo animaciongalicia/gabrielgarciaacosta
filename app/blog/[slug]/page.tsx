@@ -1,8 +1,8 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { getPost, getAllSlugs, formatDate, getRelatedPosts, getAdjacentPosts, getPostsInSerie, getSortedPosts } from "@/lib/posts"
-import { CATEGORIAS, SERIES } from "@/lib/categorias"
+import { getPost, getAllSlugs, formatDate, getRelatedPosts, getAdjacentPosts, getSortedPosts } from "@/lib/posts"
+import { CATEGORIAS } from "@/lib/categorias"
 import ReadingProgress from "@/components/ReadingProgress"
 import ArticleTOC from "@/components/ArticleTOC"
 import SidebarMore from "@/components/SidebarMore"
@@ -56,14 +56,7 @@ export default async function BlogPost({ params }: Props) {
   }
 
   const cat = CATEGORIAS[post.categoria]
-  const serieConfig = post.serie ? SERIES[post.serie] : null
-  const serieItems = post.serie ? getPostsInSerie(post.serie) : []
-  const currentIndexInSerie = serieItems.findIndex((p) => p.slug === slug)
-
-  // Si el post está en una serie, los related cambian: muestra posts de categoría excluyendo los de la misma serie
-  const related = serieConfig
-    ? getRelatedPosts(slug, post.categoria, 2).filter((p) => p.serie !== post.serie)
-    : getRelatedPosts(slug, post.categoria, 2)
+  const related = getRelatedPosts(slug, post.categoria, 2)
 
   const { prev, next } = getAdjacentPosts(slug)
   const allPosts = getSortedPosts()
@@ -111,35 +104,6 @@ export default async function BlogPost({ params }: Props) {
           <div className="article-layout">
             <div>
               <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }} />
-
-              {serieConfig && serieItems.length > 1 && (
-                <aside className="series-box" aria-labelledby="series-heading">
-                  <div className="series-header">
-                    <div>
-                      <div className="series-label">Serie</div>
-                      <h2 className="series-title" id="series-heading">{serieConfig.nombre}</h2>
-                    </div>
-                    <div className="series-position">
-                      Parte {currentIndexInSerie + 1} de {serieItems.length}
-                    </div>
-                  </div>
-                  <ul className="series-list" role="list">
-                    {serieItems.map((item, i) => (
-                      <li
-                        key={item.slug}
-                        className={`series-item${item.slug === slug ? " is-current" : ""}`}
-                      >
-                        <span className="series-item-num">{i + 1}.</span>
-                        {item.slug === slug ? (
-                          <span>{item.title}</span>
-                        ) : (
-                          <Link href={`/blog/${item.slug}`}>{item.title}</Link>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </aside>
-              )}
 
               {(prev || next) && (
                 <nav className="post-nav" aria-label="Navegación entre entradas">
@@ -207,7 +171,6 @@ export default async function BlogPost({ params }: Props) {
               <SidebarMore
                 posts={allPosts}
                 currentSlug={slug}
-                currentSerie={post.serie}
                 currentCategoria={post.categoria}
                 limit={5}
               />
