@@ -30,6 +30,6 @@ Tengo 13 años. Primero de ESO.
 
 Mi padre dice que la diferencia entre la gente que consigue cosas y la que no, muchas veces está en que unos empezaron antes. No en que sean más listos ni tengan más suerte.
 
-Empezar antes. Eso lo puedo hacer yo ahora mismo.
+[Empezar antes](/blog/empezar-pronto-decision). Eso lo puedo hacer yo ahora mismo.
 
 Así que empiezo.

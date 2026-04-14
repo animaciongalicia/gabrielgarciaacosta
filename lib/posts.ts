@@ -3,10 +3,10 @@ import path from "path"
 import matter from "gray-matter"
 import { remark } from "remark"
 import html from "remark-html"
-import { CATEGORIAS, CATEGORIA_SLUGS } from "./categorias"
+import { CATEGORIAS, CATEGORIA_SLUGS, SERIES } from "./categorias"
 
-export { CATEGORIAS, CATEGORIA_SLUGS } from "./categorias"
-export type { CategoriaConfig } from "./categorias"
+export { CATEGORIAS, CATEGORIA_SLUGS, SERIES } from "./categorias"
+export type { CategoriaConfig, SerieConfig } from "./categorias"
 
 const postsDirectory = path.join(process.cwd(), "posts")
 
@@ -18,16 +18,33 @@ export interface PostMeta {
   resumen: string
   imagen?: string
   keywords?: string[]
+  serie?: string
   readingTime: number
+}
+
+export interface Heading {
+  id: string
+  text: string
+  level: number
 }
 
 export interface Post extends PostMeta {
   content: string
+  headings: Heading[]
 }
 
 function calcReadingTime(text: string): number {
   const words = text.trim().split(/\s+/).length
   return Math.max(1, Math.ceil(words / 200))
+}
+
+function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
 }
 
 export function getSortedPosts(): PostMeta[] {
@@ -47,6 +64,7 @@ export function getSortedPosts(): PostMeta[] {
         resumen: data.resumen,
         imagen: data.imagen,
         keywords: data.keywords ?? [],
+        serie: data.serie,
         readingTime: calcReadingTime(content),
       } as PostMeta
     })
@@ -55,6 +73,13 @@ export function getSortedPosts(): PostMeta[] {
 
 export function getPostsByCategoria(categoria: string): PostMeta[] {
   return getSortedPosts().filter((p) => p.categoria === categoria)
+}
+
+export function getPostsInSerie(serie: string): PostMeta[] {
+  // Orden ascendente por fecha: parte 1 primero
+  return getSortedPosts()
+    .filter((p) => p.serie === serie)
+    .reverse()
 }
 
 export function getRelatedPosts(currentSlug: string, categoria: string, limit = 2): PostMeta[] {
@@ -82,7 +107,18 @@ export async function getPost(slug: string): Promise<Post> {
   const fileContents = fs.readFileSync(fullPath, "utf8")
   const { data, content } = matter(fileContents)
   const processedContent = await remark().use(html).process(content)
-  const contentHtml = processedContent.toString()
+  let contentHtml = processedContent.toString()
+
+  // Inyectar IDs en h2/h3 y extraer índice
+  const headings: Heading[] = []
+  contentHtml = contentHtml.replace(/<(h[23])>([\s\S]*?)<\/\1>/g, (_, tag, innerHtml) => {
+    const text = innerHtml.replace(/<[^>]+>/g, "").trim()
+    const id = slugifyHeading(text)
+    const level = tag === "h2" ? 2 : 3
+    headings.push({ id, text, level })
+    return `<${tag} id="${id}">${innerHtml}</${tag}>`
+  })
+
   return {
     slug,
     title: data.title,
@@ -91,8 +127,10 @@ export async function getPost(slug: string): Promise<Post> {
     resumen: data.resumen,
     imagen: data.imagen,
     keywords: data.keywords ?? [],
+    serie: data.serie,
     readingTime: calcReadingTime(content),
     content: contentHtml,
+    headings,
   }
 }
 

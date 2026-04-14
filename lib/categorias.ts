@@ -94,3 +94,31 @@ export const CATEGORIAS: Record<string, CategoriaConfig> = {
 }
 
 export const CATEGORIA_SLUGS = Object.keys(CATEGORIAS)
+
+// ============================================
+// SERIES — posts agrupados tem\u00e1ticamente
+// ============================================
+
+export interface SerieConfig {
+  slug: string
+  nombre: string
+  descripcion: string
+}
+
+export const SERIES: Record<string, SerieConfig> = {
+  "vaciar-habitacion": {
+    slug: "vaciar-habitacion",
+    nombre: "Vaciar la habitaci\u00f3n",
+    descripcion: "Lo que aprend\u00ed vendiendo cosas viejas en Wallapop con un objetivo concreto.",
+  },
+  "fondo-padre": {
+    slug: "fondo-padre",
+    nombre: "El fondo de mi padre",
+    descripcion: "El fondo que me abri\u00f3 mi padre en 2018 y lo que entend\u00ed gracias a \u00e9l sobre el inter\u00e9s compuesto.",
+  },
+  "padre-trabajando": {
+    slug: "padre-trabajando",
+    nombre: "Mi padre, el sal\u00f3n y yo",
+    descripcion: "Lo que aprendo estando cerca mientras mi padre trabaja desde casa.",
+  },
+}

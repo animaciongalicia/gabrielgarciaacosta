@@ -43,10 +43,12 @@ export default async function PillarPage({ params }: Props) {
 
   const posts = getPostsByCategoria(pillar)
   const BASE = "https://gabrielgarciaacosta.com"
+  const catColorVar = `var(--cat-${pillar})`
 
   return (
     <>
-      <header className="page-header">
+      <header className="pillar-header" style={{ "--cat-color": catColorVar } as React.CSSProperties}>
+        <div className="pillar-accent-bar" aria-hidden="true" />
         <div className="container">
           <nav className="breadcrumbs" aria-label="Breadcrumb">
             <Link href="/">Inicio</Link>
@@ -54,17 +56,19 @@ export default async function PillarPage({ params }: Props) {
             <span className="current">{config.nombre}</span>
           </nav>
 
-          <div
-            className="page-eyebrow"
-            style={{ "--cat-color": `var(--cat-${pillar})` } as React.CSSProperties}
-          >
-            {config.nombre}
+          <div className="pillar-hero">
+            <div className="page-eyebrow">
+              {config.nombre}
+            </div>
+            <h1 className="page-title">{config.descripcion.split(".")[0]}.</h1>
+            <p className="page-desc">
+              {config.descripcion.split(".").slice(1).join(".").trim()}
+            </p>
+            <div className="pillar-counter">
+              <strong>{posts.length}</strong>
+              {posts.length === 1 ? "entrada publicada" : "entradas publicadas"}
+            </div>
           </div>
-
-          <h1 className="page-title">{config.descripcion.split(".")[0]}.</h1>
-          <p className="page-desc">
-            {config.descripcion.split(".").slice(1).join(".").trim()}
-          </p>
         </div>
       </header>
 
@@ -92,7 +96,7 @@ export default async function PillarPage({ params }: Props) {
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">
-              {posts.length === 0 ? "Aún no hay entradas" : `Entradas`}
+              {posts.length === 0 ? "Aún no hay entradas" : "Entradas"}
             </h2>
             {posts.length > 0 && (
               <span className="section-meta">

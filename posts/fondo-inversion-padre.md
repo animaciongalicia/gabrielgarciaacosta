@@ -2,6 +2,7 @@
 title: "Mi padre me abrió un fondo en 2018 y ahora entiendo por qué"
 date: "2026-04-11"
 categoria: "inversiones"
+serie: "fondo-padre"
 resumen: "En total hemos metido 5.000€. Pero hoy el fondo vale 8.000€. Me he sentado con mi padre a que me explique cómo puede estar pasando eso."
 imagen: "/og/fondo.jpg"
 keywords: ["interés compuesto", "fondo inversión", "ahorro adolescente", "largo plazo", "empezar pronto"]
@@ -47,7 +48,7 @@ Me dijo: *"Porque lo que más vale en esto no es el dinero que metes. Es los añ
 
 Si hubiera empezado cuando yo tenga 18, aunque metiera el doble cada año, no llegaríamos a lo mismo. Faltarían los años de interés compuesto.
 
-La decisión importante no fue cuánto. Fue cuándo.
+[La decisión importante no fue cuánto. Fue cuándo](/blog/empezar-pronto-decision).
 
 ## Lo que me llevo
 

@@ -2,6 +2,7 @@
 title: "Vacié mi habitación para comprarme la Switch 2"
 date: "2026-04-10"
 categoria: "negocios"
+serie: "vaciar-habitacion"
 resumen: "Quería la Switch 2 pero no quería pedírsela a mis padres. Mi padre me dijo que mirara qué tenía en casa que ya no usaba. Al final saqué 215 euros."
 imagen: "/og/wallapop.jpg"
 keywords: ["wallapop", "ahorro adolescente", "switch 2", "vender cosas", "primer negocio"]
@@ -47,6 +48,6 @@ Dos cosas me han quedado claras después de esto:
 
 **Una**: tener un objetivo cambia las cuentas. Cuando ahorras "por si acaso", no te fijas en nada. Cuando ahorras para algo concreto, ves oportunidades en sitios donde antes no mirabas.
 
-**Dos**: las cosas que tú no usas sí valen dinero. No solo los juguetes caros o los videojuegos. Ropa, libros infantiles, un portátil que no enciende. Alguien lo quiere. El problema es solo encontrarlo.
+**Dos**: [las cosas que tú no usas sí valen dinero](/blog/cosas-viejas-valen-dinero). No solo los juguetes caros o los videojuegos. Ropa, libros infantiles, un portátil que no enciende. Alguien lo quiere. El problema es solo encontrarlo.
 
 Todavía me faltan unos 150€ para la Switch 2. Pero ahora ya sé cómo se saca ese dinero.

@@ -2,6 +2,7 @@
 title: "Pensaba que mis cosas viejas no valían nada"
 date: "2026-04-13"
 categoria: "mentalidad"
+serie: "vaciar-habitacion"
 resumen: "Lo más raro de vender cosas en Wallapop no fue el dinero. Fue darme cuenta de que durante años había pensado que cosas que valían 70€ no valían nada. Solo porque yo ya no las usaba."
 imagen: "/og/mentalidad-valor.jpg"
 keywords: ["sesgos cognitivos", "valor percibido", "wallapop", "formas de pensar"]

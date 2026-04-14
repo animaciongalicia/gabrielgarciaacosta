@@ -1,8 +1,10 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { getPost, getAllSlugs, formatDate, getRelatedPosts, getAdjacentPosts } from "@/lib/posts"
-import { CATEGORIAS } from "@/lib/categorias"
+import { getPost, getAllSlugs, formatDate, getRelatedPosts, getAdjacentPosts, getPostsInSerie } from "@/lib/posts"
+import { CATEGORIAS, SERIES } from "@/lib/categorias"
+import ReadingProgress from "@/components/ReadingProgress"
+import ArticleTOC from "@/components/ArticleTOC"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -53,12 +55,22 @@ export default async function BlogPost({ params }: Props) {
   }
 
   const cat = CATEGORIAS[post.categoria]
-  const related = getRelatedPosts(slug, post.categoria, 2)
+  const serieConfig = post.serie ? SERIES[post.serie] : null
+  const serieItems = post.serie ? getPostsInSerie(post.serie) : []
+  const currentIndexInSerie = serieItems.findIndex((p) => p.slug === slug)
+
+  // Si el post está en una serie, los related cambian: muestra posts de categoría excluyendo los de la misma serie
+  const related = serieConfig
+    ? getRelatedPosts(slug, post.categoria, 2).filter((p) => p.serie !== post.serie)
+    : getRelatedPosts(slug, post.categoria, 2)
+
   const { prev, next } = getAdjacentPosts(slug)
   const BASE = "https://gabrielgarciaacosta.com"
 
   return (
     <>
+      <ReadingProgress />
+
       <header className="page-header">
         <div className="container">
           <nav className="breadcrumbs" aria-label="Breadcrumb">
@@ -94,67 +106,102 @@ export default async function BlogPost({ params }: Props) {
 
       <article className="section divider-top">
         <div className="container">
-          <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div className="article-layout">
+            <div>
+              <div className="prose" dangerouslySetInnerHTML={{ __html: post.content }} />
 
-          {(prev || next) && (
-            <nav className="post-nav" aria-label="Navegación entre entradas">
-              {prev ? (
-                <Link href={`/blog/${prev.slug}`} className="post-nav-link prev">
-                  <span className="post-nav-label">← Anterior</span>
-                  <span className="post-nav-title">{prev.title}</span>
-                </Link>
-              ) : <span />}
-              {next ? (
-                <Link href={`/blog/${next.slug}`} className="post-nav-link next">
-                  <span className="post-nav-label">Siguiente →</span>
-                  <span className="post-nav-title">{next.title}</span>
-                </Link>
-              ) : <span />}
-            </nav>
-          )}
+              {serieConfig && serieItems.length > 1 && (
+                <aside className="series-box" aria-labelledby="series-heading">
+                  <div className="series-header">
+                    <div>
+                      <div className="series-label">Serie</div>
+                      <h2 className="series-title" id="series-heading">{serieConfig.nombre}</h2>
+                    </div>
+                    <div className="series-position">
+                      Parte {currentIndexInSerie + 1} de {serieItems.length}
+                    </div>
+                  </div>
+                  <ul className="series-list" role="list">
+                    {serieItems.map((item, i) => (
+                      <li
+                        key={item.slug}
+                        className={`series-item${item.slug === slug ? " is-current" : ""}`}
+                      >
+                        <span className="series-item-num">{i + 1}.</span>
+                        {item.slug === slug ? (
+                          <span>{item.title}</span>
+                        ) : (
+                          <Link href={`/blog/${item.slug}`}>{item.title}</Link>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </aside>
+              )}
 
-          {related.length > 0 && (
-            <aside style={{ marginTop: "var(--space-16)", paddingTop: "var(--space-10)", borderTop: "1px solid var(--color-divider)" }}>
-              <div className="section-header" style={{ marginBottom: "var(--space-6)" }}>
-                <h2 className="section-title">Leer también</h2>
-                {cat && (
-                  <Link
-                    href={`/${cat.slug}`}
-                    style={{ fontSize: "var(--text-xs)", color: "var(--color-text-faint)", textTransform: "uppercase", letterSpacing: "0.05em" }}
-                  >
-                    Ver sección →
-                  </Link>
-                )}
-              </div>
-              <ul className="posts-list" role="list">
-                {related.map((r) => {
-                  const rCat = CATEGORIAS[r.categoria]
-                  return (
-                    <li key={r.slug}>
-                      <Link href={`/blog/${r.slug}`} className="post-card">
-                        <div className="post-body">
-                          {rCat && (
-                            <span
-                              className="post-cat-label"
-                              style={{ "--cat-color": `var(--cat-${r.categoria})` } as React.CSSProperties}
-                            >
-                              {rCat.nombre}
-                            </span>
-                          )}
-                          <h3 className="post-title">{r.title}</h3>
-                          <p className="post-excerpt">{r.resumen}</p>
-                        </div>
-                        <div className="post-meta-right">
-                          <time className="post-date" dateTime={r.date}>{formatDate(r.date)}</time>
-                          <span className="post-reading-time">{r.readingTime} min</span>
-                        </div>
+              {(prev || next) && (
+                <nav className="post-nav" aria-label="Navegación entre entradas">
+                  {prev ? (
+                    <Link href={`/blog/${prev.slug}`} className="post-nav-link prev">
+                      <span className="post-nav-label">← Anterior</span>
+                      <span className="post-nav-title">{prev.title}</span>
+                    </Link>
+                  ) : <span />}
+                  {next ? (
+                    <Link href={`/blog/${next.slug}`} className="post-nav-link next">
+                      <span className="post-nav-label">Siguiente →</span>
+                      <span className="post-nav-title">{next.title}</span>
+                    </Link>
+                  ) : <span />}
+                </nav>
+              )}
+
+              {related.length > 0 && (
+                <aside style={{ marginTop: "var(--space-16)", paddingTop: "var(--space-10)", borderTop: "1px solid var(--color-divider)" }}>
+                  <div className="section-header" style={{ marginBottom: "var(--space-6)" }}>
+                    <h2 className="section-title">Leer también</h2>
+                    {cat && (
+                      <Link
+                        href={`/${cat.slug}`}
+                        style={{ fontSize: "var(--text-xs)", color: "var(--color-text-faint)", textTransform: "uppercase", letterSpacing: "0.05em" }}
+                      >
+                        Ver sección →
                       </Link>
-                    </li>
-                  )
-                })}
-              </ul>
-            </aside>
-          )}
+                    )}
+                  </div>
+                  <ul className="posts-list" role="list">
+                    {related.map((r) => {
+                      const rCat = CATEGORIAS[r.categoria]
+                      return (
+                        <li key={r.slug}>
+                          <Link href={`/blog/${r.slug}`} className="post-card">
+                            <div className="post-body">
+                              {rCat && (
+                                <span
+                                  className="post-cat-label"
+                                  style={{ "--cat-color": `var(--cat-${r.categoria})` } as React.CSSProperties}
+                                >
+                                  {rCat.nombre}
+                                </span>
+                              )}
+                              <h3 className="post-title">{r.title}</h3>
+                              <p className="post-excerpt">{r.resumen}</p>
+                            </div>
+                            <div className="post-meta-right">
+                              <time className="post-date" dateTime={r.date}>{formatDate(r.date)}</time>
+                              <span className="post-reading-time">{r.readingTime} min</span>
+                            </div>
+                          </Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </aside>
+              )}
+            </div>
+
+            <ArticleTOC headings={post.headings} />
+          </div>
         </div>
       </article>
 

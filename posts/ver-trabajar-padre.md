@@ -2,6 +2,7 @@
 title: "Mi padre trabaja en el salón y yo miro"
 date: "2026-04-12"
 categoria: "negocios"
+serie: "padre-trabajando"
 resumen: "Mi padre no tiene oficina. Trabaja en el salón, con el portátil. Tiene webs de alquiler de barcos en Galicia y de eventos para empresas. Yo veo vídeos al lado. A veces me explica cosas."
 imagen: "/og/padre-trabajo.jpg"
 keywords: ["negocios online", "aprender observando", "emprendimiento familiar", "galicia"]
@@ -42,7 +43,7 @@ También le veo frustrarse cuando algo no sale. O insistir con una cosa que yo p
 
 Se me han pegado cosas que en el cole no aparecen.
 
-Palabras: **cliente**, **conversión**, **margen**, **CTR**, **lead**. No las estudié. Las oigo todos los días.
+[Palabras](/blog/palabras-del-mundo-real): **cliente**, **conversión**, **margen**, **CTR**, **lead**. No las estudié. Las oigo todos los días.
 
 Formas de pensar: *"el cliente siempre tiene algo que decir"*, *"si no convence en 3 segundos, no convence nunca"*, *"una web que no se puede medir no sirve"*. Frases que él suelta como verdades.
 
