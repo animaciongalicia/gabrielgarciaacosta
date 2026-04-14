@@ -783,11 +783,12 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
    ============================================ */
 .post-card--featured {
   padding-block: var(--space-8);
-  background: var(--color-surface);
+  background: color-mix(in srgb, var(--cat-color, var(--color-primary)) 7%, var(--color-surface));
   border-radius: var(--radius-lg);
   padding-inline: var(--space-6);
   margin-inline: calc(var(--space-6) * -1);
   border-bottom: 1px solid var(--color-divider);
+  border-left: 3px solid var(--cat-color, var(--color-primary));
 }
 .post-card--featured .post-title {
   font-size: var(--text-xl);

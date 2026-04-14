@@ -53,6 +53,7 @@ export default function Home() {
                       <Link
                         href={`/blog/${post.slug}`}
                         className={`post-card${isFeatured ? " post-card--featured" : ""}`}
+                        style={isFeatured ? ({ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties) : undefined}
                       >
                         <div className="post-body">
                           {cat && (
