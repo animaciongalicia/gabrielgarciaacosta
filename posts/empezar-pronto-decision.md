@@ -2,7 +2,6 @@
 title: "La mejor decisión que tomó mi padre con el dinero fue empezar pronto"
 date: "2026-04-13"
 categoria: "decisiones"
-serie: "fondo-padre"
 resumen: "En 2018 yo tenía 5 años y mi padre ya me estaba metiendo 300€ al año en un fondo. En ese momento la decisión no parecía importante. Ocho años después me parece la más inteligente que tomó."
 imagen: "/og/decision-empezar.jpg"
 keywords: ["decisiones largo plazo", "interés compuesto", "empezar pronto", "dinero a largo plazo"]
