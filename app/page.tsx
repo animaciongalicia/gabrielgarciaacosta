@@ -9,8 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  const allPosts = getSortedPosts()
-  const [featured, ...rest] = allPosts
+  const posts = getSortedPosts()
 
   return (
     <>
@@ -35,73 +34,46 @@ export default function Home() {
           <div className="section-header">
             <h2 className="section-title" id="posts-heading">Últimas entradas</h2>
             <span className="section-meta">
-              {allPosts.length} {allPosts.length === 1 ? "publicada" : "publicadas"}
+              {posts.length} {posts.length === 1 ? "publicada" : "publicadas"}
             </span>
           </div>
 
-          {featured ? (
-            <>
-              {(() => {
-                const cat = CATEGORIAS[featured.categoria]
-                return (
-                  <Link
-                    href={`/blog/${featured.slug}`}
-                    className="featured-post"
-                    style={{ "--cat-color": `var(--cat-${featured.categoria})` } as React.CSSProperties}
-                    aria-label={`Lo más reciente: ${featured.title}`}
-                  >
-                    <div>
-                      <span className="featured-eyebrow">
-                        {cat?.nombre ?? "Entrada"}
-                        <span className="featured-label-latest">· Último</span>
-                      </span>
-                      <h3 className="featured-title">{featured.title}</h3>
-                      <p className="featured-excerpt">{featured.resumen}</p>
-                      <div className="featured-meta">
-                        <time dateTime={featured.date}>{formatDate(featured.date)}</time>
-                        <span aria-hidden="true">·</span>
-                        <span>{featured.readingTime} min de lectura</span>
-                      </div>
-                    </div>
-                    <span className="featured-arrow" aria-hidden="true">→</span>
-                  </Link>
-                )
-              })()}
-
-              {rest.length > 0 && (
-                <ul className="posts-list" role="list">
-                  {rest.map((post) => {
-                    const cat = CATEGORIAS[post.categoria]
-                    return (
-                      <li key={post.slug}>
-                        <Link href={`/blog/${post.slug}`} className="post-card">
-                          <div className="post-body">
-                            {cat && (
-                              <span
-                                className="post-cat-label"
-                                style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
-                              >
-                                {cat.nombre}
-                              </span>
-                            )}
-                            <h3 className="post-title">{post.title}</h3>
-                            <p className="post-excerpt">{post.resumen}</p>
-                          </div>
-                          <div className="post-meta-right">
-                            <time className="post-date" dateTime={post.date}>{formatDate(post.date)}</time>
-                            <span className="post-reading-time">{post.readingTime} min</span>
-                          </div>
-                        </Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
-            </>
-          ) : (
+          {posts.length === 0 ? (
             <div className="empty-state">
               <p>Aún no hay entradas. Vuelve pronto.</p>
             </div>
+          ) : (
+            <ul className="posts-list" role="list">
+              {posts.map((post, i) => {
+                const cat = CATEGORIAS[post.categoria]
+                const isFeatured = i === 0
+                return (
+                  <li key={post.slug}>
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className={`post-card${isFeatured ? " post-card--featured" : ""}`}
+                    >
+                      <div className="post-body">
+                        {cat && (
+                          <span
+                            className="post-cat-label"
+                            style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
+                          >
+                            {cat.nombre}
+                          </span>
+                        )}
+                        <h3 className="post-title">{post.title}</h3>
+                        <p className="post-excerpt">{post.resumen}</p>
+                      </div>
+                      <div className="post-meta-right">
+                        <time className="post-date" dateTime={post.date}>{formatDate(post.date)}</time>
+                        <span className="post-reading-time">{post.readingTime} min</span>
+                      </div>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
           )}
         </div>
       </section>
