@@ -3,10 +3,10 @@ import path from "path"
 import matter from "gray-matter"
 import { remark } from "remark"
 import html from "remark-html"
-import { CATEGORIAS, CATEGORIA_SLUGS, SERIES } from "./categorias"
+import { CATEGORIAS, CATEGORIA_SLUGS } from "./categorias"
 
-export { CATEGORIAS, CATEGORIA_SLUGS, SERIES } from "./categorias"
-export type { CategoriaConfig, SerieConfig } from "./categorias"
+export { CATEGORIAS, CATEGORIA_SLUGS } from "./categorias"
+export type { CategoriaConfig } from "./categorias"
 
 const postsDirectory = path.join(process.cwd(), "posts")
 
@@ -18,7 +18,6 @@ export interface PostMeta {
   resumen: string
   imagen?: string
   keywords?: string[]
-  serie?: string
   readingTime: number
 }
 
@@ -64,7 +63,6 @@ export function getSortedPosts(): PostMeta[] {
         resumen: data.resumen,
         imagen: data.imagen,
         keywords: data.keywords ?? [],
-        serie: data.serie,
         readingTime: calcReadingTime(content),
       } as PostMeta
     })
@@ -73,13 +71,6 @@ export function getSortedPosts(): PostMeta[] {
 
 export function getPostsByCategoria(categoria: string): PostMeta[] {
   return getSortedPosts().filter((p) => p.categoria === categoria)
-}
-
-export function getPostsInSerie(serie: string): PostMeta[] {
-  // Orden ascendente por fecha: parte 1 primero
-  return getSortedPosts()
-    .filter((p) => p.serie === serie)
-    .reverse()
 }
 
 export function getRelatedPosts(currentSlug: string, categoria: string, limit = 2): PostMeta[] {
@@ -127,7 +118,6 @@ export async function getPost(slug: string): Promise<Post> {
     resumen: data.resumen,
     imagen: data.imagen,
     keywords: data.keywords ?? [],
-    serie: data.serie,
     readingTime: calcReadingTime(content),
     content: contentHtml,
     headings,
