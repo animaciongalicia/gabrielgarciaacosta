@@ -275,11 +275,6 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 .nav-link:hover { color: var(--color-text); background: var(--color-surface-2); opacity: 1; }
 .nav-link.active { color: var(--color-primary); background: var(--color-primary-highlight); }
 
-/* "Sobre mí" — oculto en header desktop, visible solo en mobile-nav */
-.nav-link--sobre {
-  display: none;
-}
-
 .header-actions { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
 
 .theme-toggle, .menu-toggle {
