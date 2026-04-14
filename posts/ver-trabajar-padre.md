@@ -2,7 +2,6 @@
 title: "Mi padre trabaja en el salón y yo miro"
 date: "2026-04-12"
 categoria: "negocios"
-serie: "padre-trabajando"
 resumen: "Mi padre no tiene oficina. Trabaja en el salón, con el portátil. Tiene webs de alquiler de barcos en Galicia y de eventos para empresas. Yo veo vídeos al lado. A veces me explica cosas."
 imagen: "/og/padre-trabajo.jpg"
 keywords: ["negocios online", "aprender observando", "emprendimiento familiar", "galicia"]
