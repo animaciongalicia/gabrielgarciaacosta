@@ -1,10 +1,11 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { getPost, getAllSlugs, formatDate, getRelatedPosts, getAdjacentPosts, getPostsInSerie } from "@/lib/posts"
+import { getPost, getAllSlugs, formatDate, getRelatedPosts, getAdjacentPosts, getPostsInSerie, getSortedPosts } from "@/lib/posts"
 import { CATEGORIAS, SERIES } from "@/lib/categorias"
 import ReadingProgress from "@/components/ReadingProgress"
 import ArticleTOC from "@/components/ArticleTOC"
+import SidebarMore from "@/components/SidebarMore"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -65,6 +66,7 @@ export default async function BlogPost({ params }: Props) {
     : getRelatedPosts(slug, post.categoria, 2)
 
   const { prev, next } = getAdjacentPosts(slug)
+  const allPosts = getSortedPosts()
   const BASE = "https://gabrielgarciaacosta.com"
 
   return (
@@ -200,7 +202,16 @@ export default async function BlogPost({ params }: Props) {
               )}
             </div>
 
-            <ArticleTOC headings={post.headings} />
+            <div className="article-sidebar">
+              <ArticleTOC headings={post.headings} />
+              <SidebarMore
+                posts={allPosts}
+                currentSlug={slug}
+                currentSerie={post.serie}
+                currentCategoria={post.categoria}
+                limit={5}
+              />
+            </div>
           </div>
         </div>
       </article>
