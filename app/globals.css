@@ -595,9 +595,10 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 }
 
 .article-lead {
+  font-family: var(--font-body);
   font-size: var(--text-lg);
   color: var(--color-text-muted);
-  line-height: 1.55;
+  line-height: 1.7;
   max-width: 60ch;
 }
 
