@@ -111,17 +111,23 @@ export default async function PillarPage({ params }: Props) {
               <p>Estoy trabajando en ello.</p>
             </div>
           ) : (
-            <ul className="posts-list" role="list">
+            <ul className="pillar-posts-grid" role="list">
               {posts.map((post) => (
                 <li key={post.slug}>
-                  <Link href={`/blog/${post.slug}`} className="post-card">
-                    <div className="post-body">
-                      <h3 className="post-title">{post.title}</h3>
-                      <p className="post-excerpt">{post.resumen}</p>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="home-card"
+                    style={{ "--cat-color": catColorVar } as React.CSSProperties}
+                  >
+                    <div className="home-card-top">
+                      <span className="home-card-cat">{config.nombre}</span>
+                      <h3 className="home-card-title">{post.title}</h3>
+                      <p className="home-card-excerpt">{post.resumen}</p>
                     </div>
-                    <div className="post-meta-right">
-                      <time className="post-date" dateTime={post.date}>{formatDate(post.date)}</time>
-                      <span className="post-reading-time">{post.readingTime} min</span>
+                    <div className="home-card-meta">
+                      <time dateTime={post.date}>{formatDate(post.date)}</time>
+                      <span aria-hidden="true">·</span>
+                      <span>{post.readingTime} min</span>
                     </div>
                   </Link>
                 </li>

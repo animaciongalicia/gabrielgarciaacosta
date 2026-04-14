@@ -135,27 +135,25 @@ export default async function BlogPost({ params }: Props) {
                       </Link>
                     )}
                   </div>
-                  <ul className="posts-list" role="list">
+                  <ul className="home-grid" role="list">
                     {related.map((r) => {
                       const rCat = CATEGORIAS[r.categoria]
                       return (
                         <li key={r.slug}>
-                          <Link href={`/blog/${r.slug}`} className="post-card">
-                            <div className="post-body">
-                              {rCat && (
-                                <span
-                                  className="post-cat-label"
-                                  style={{ "--cat-color": `var(--cat-${r.categoria})` } as React.CSSProperties}
-                                >
-                                  {rCat.nombre}
-                                </span>
-                              )}
-                              <h3 className="post-title">{r.title}</h3>
-                              <p className="post-excerpt">{r.resumen}</p>
+                          <Link
+                            href={`/blog/${r.slug}`}
+                            className="home-card"
+                            style={{ "--cat-color": `var(--cat-${r.categoria})` } as React.CSSProperties}
+                          >
+                            <div className="home-card-top">
+                              {rCat && <span className="home-card-cat">{rCat.nombre}</span>}
+                              <h3 className="home-card-title">{r.title}</h3>
+                              <p className="home-card-excerpt">{r.resumen}</p>
                             </div>
-                            <div className="post-meta-right">
-                              <time className="post-date" dateTime={r.date}>{formatDate(r.date)}</time>
-                              <span className="post-reading-time">{r.readingTime} min</span>
+                            <div className="home-card-meta">
+                              <time dateTime={r.date}>{formatDate(r.date)}</time>
+                              <span aria-hidden="true">·</span>
+                              <span>{r.readingTime} min</span>
                             </div>
                           </Link>
                         </li>
