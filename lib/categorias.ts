@@ -49,7 +49,7 @@ export const CATEGORIAS: Record<string, CategoriaConfig> = {
   decisiones: {
     slug: "decisiones",
     nombre: "Decisiones & errores",
-    descripcion: "Decisiones que tomé, por qué las tomé, y qué pasó. Los errores también cuentan, a veces más.",
+    descripcion: "Decisiones reales y errores honestos. Por qué las tomé, qué pasó, y qué hubiera hecho distinto. Un error bien analizado vale más que diez aciertos.",
     icono: "⚖️",
     bg: "var(--cat-decisiones-bg)",
     border: "var(--cat-decisiones-border)",
@@ -79,7 +79,7 @@ export const CATEGORIAS: Record<string, CategoriaConfig> = {
   habilidades: {
     slug: "habilidades",
     nombre: "Habilidades prácticas",
-    descripcion: "Ventas, negociación, foco, hablar en público. Las habilidades que no enseñan en el cole pero que más importan.",
+    descripcion: "Habilidades que más importan. Ventas, negociación, foco, hablar en público — las que no enseñan en el cole pero que se necesitan en la vida real.",
     icono: "🛠️",
     bg: "var(--cat-habilidades-bg)",
     border: "var(--cat-habilidades-border)",
