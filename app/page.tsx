@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function Home() {
   const posts = getSortedPosts()
   const featured = posts[0]
-  const rest = posts.slice(1, 6)
+  const rest = posts.slice(1, 5)
 
   return (
     <>
@@ -69,49 +69,40 @@ export default function Home() {
           <div className="container">
             <div className="section-header">
               <h2 className="section-title" id="posts-heading">Más entradas</h2>
-              <span className="section-meta">
-                {posts.length} {posts.length === 1 ? "publicada" : "publicadas"}
-              </span>
+              {posts.length > 5 && (
+                <Link href="/blog" className="section-meta-link">
+                  Ver todas ({posts.length}) →
+                </Link>
+              )}
             </div>
 
-            <ul className="posts-list" role="list">
+            <ul className="home-grid" role="list">
               {rest.map((post) => {
                 const cat = CATEGORIAS[post.categoria]
                 return (
                   <li key={post.slug}>
-                    <Link href={`/blog/${post.slug}`} className="post-card">
-                      <div className="post-body">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="home-card"
+                      style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
+                    >
+                      <div className="home-card-top">
                         {cat && (
-                          <span
-                            className="post-cat-label"
-                            style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
-                          >
-                            {cat.nombre}
-                          </span>
+                          <span className="home-card-cat">{cat.nombre}</span>
                         )}
-                        <h3 className="post-title">{post.title}</h3>
-                        <p className="post-excerpt">{post.resumen}</p>
+                        <h3 className="home-card-title">{post.title}</h3>
+                        <p className="home-card-excerpt">{post.resumen}</p>
                       </div>
-                      <div className="post-meta-right">
-                        <time className="post-date" dateTime={post.date}>{formatDate(post.date)}</time>
-                        <span className="post-reading-time">{post.readingTime} min</span>
+                      <div className="home-card-meta">
+                        <time dateTime={post.date}>{formatDate(post.date)}</time>
+                        <span aria-hidden="true">·</span>
+                        <span>{post.readingTime} min</span>
                       </div>
                     </Link>
                   </li>
                 )
               })}
             </ul>
-
-            {posts.length > 6 && (
-              <div className="posts-ver-todas">
-                <Link href="/blog" className="posts-ver-todas-link">
-                  Ver todas las entradas ({posts.length})
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                    <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </Link>
-              </div>
-            )}
           </div>
         </section>
       )}
