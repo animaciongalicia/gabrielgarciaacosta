@@ -2,7 +2,6 @@
 title: "Vacié mi habitación para comprarme la Switch 2"
 date: "2026-04-10"
 categoria: "negocios"
-serie: "vaciar-habitacion"
 resumen: "Quería la Switch 2 pero no quería pedírsela a mis padres. Mi padre me dijo que mirara qué tenía en casa que ya no usaba. Al final saqué 215 euros."
 imagen: "/og/wallapop.jpg"
 keywords: ["wallapop", "ahorro adolescente", "switch 2", "vender cosas", "primer negocio"]
