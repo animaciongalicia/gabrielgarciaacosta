@@ -5,9 +5,9 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="container">
-        <div className="footer-main">
+        <div className="footer-grid">
 
-          {/* Marca */}
+          {/* Col 1 — Marca */}
           <div className="footer-brand">
             <p className="footer-copy">
               © {year} <strong>Gabriel García Acosta</strong>
@@ -16,21 +16,17 @@ export default function Footer() {
             <p className="footer-copy footer-copy--faint">Empecé esto con 13 años.</p>
           </div>
 
-          {/* Columna 1 */}
-          <nav className="footer-col" aria-label="Sección pensar y decisiones">
+          {/* Col 2 — Pensar / Decisiones / Habilidades */}
+          <nav className="footer-nav" aria-label="Secciones de pensamiento">
             <Link href="/mentalidad" className="footer-nav-link">Pensar diferente</Link>
             <Link href="/decisiones" className="footer-nav-link">Decisiones &amp; errores</Link>
             <Link href="/habilidades" className="footer-nav-link">Habilidades prácticas</Link>
           </nav>
 
-          {/* Columna 2 */}
-          <nav className="footer-col" aria-label="Sección negocios e inversiones">
+          {/* Col 3 — Negocios / Inversiones / Sobre mí / RSS */}
+          <nav className="footer-nav" aria-label="Secciones de negocios y más">
             <Link href="/negocios" className="footer-nav-link">Negocios reales</Link>
             <Link href="/inversiones" className="footer-nav-link">Inversiones</Link>
-          </nav>
-
-          {/* Columna 3 */}
-          <nav className="footer-col" aria-label="Sobre y RSS">
             <Link href="/sobre" className="footer-nav-link">Sobre mí</Link>
             <a href="/feed.xml" className="footer-nav-link footer-rss" aria-label="RSS Feed">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
