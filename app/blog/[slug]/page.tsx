@@ -66,7 +66,11 @@ export default async function BlogPost({ params }: Props) {
     <>
       <ReadingProgress />
 
-      <header className="page-header">
+      <header
+        className="page-header article-header"
+        style={{ "--cat-color": `var(--cat-${post.categoria})` } as React.CSSProperties}
+      >
+        <div className="article-accent-bar" aria-hidden="true" />
         <div className="container">
           <nav className="breadcrumbs" aria-label="Breadcrumb">
             <Link href="/">Inicio</Link>

@@ -1115,7 +1115,30 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 .article-sidebar {
   display: flex;
   flex-direction: column;
-  gap: var(--space-10);
+  gap: var(--space-8);
+}
+
+@media (min-width: 1100px) {
+  /* En desktop todo el sidebar es sticky como un bloque,
+     para que TOC + 'Otras lecturas' se muevan juntos y no se pisen. */
+  .article-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-6));
+    align-self: start;
+    max-height: calc(100vh - var(--header-height) - var(--space-6));
+    overflow-y: auto;
+    padding-right: var(--space-2);
+    /* scrollbar sutil */
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+  .article-sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .article-sidebar::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
 }
 
 .article-toc {
@@ -1125,12 +1148,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 @media (min-width: 1100px) {
   .article-toc {
     display: block;
-    position: sticky;
-    top: calc(var(--header-height) + var(--space-6));
-    align-self: start;
     font-size: var(--text-xs);
-    max-height: calc(100vh - var(--header-height) - var(--space-8));
-    overflow-y: auto;
   }
 }
 
@@ -1263,13 +1281,24 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
   overflow: hidden;
 }
 
-.pillar-accent-bar {
+.pillar-accent-bar,
+.article-accent-bar {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   width: 4px;
   background: var(--cat-color, var(--color-primary));
+}
+
+/* ============================================
+   ARTICLE HEADER — acento de color de categoría
+   (mismo patrón que pillar para homogeneidad visual)
+   ============================================ */
+.article-header {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--cat-color, var(--color-primary)) 5%, transparent);
 }
 
 .pillar-hero {
