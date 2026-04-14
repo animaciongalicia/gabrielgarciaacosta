@@ -27,8 +27,8 @@
   --color-text-inverse: #fafaf9;
 
   /* Acento principal */
-  --color-primary: #2d4bce;
-  --color-primary-hover: #1e38a8;
+  --color-primary: #3451A0;
+  --color-primary-hover: #263D84;
   --color-primary-highlight: #dce3f9;
 
   /* Puntos de categoría — solo color de texto/punto, no fondos saturados */
@@ -93,8 +93,8 @@
   --color-text-muted: #a09e9a;
   --color-text-faint: #5a5956;
   --color-text-inverse: #131210;
-  --color-primary: #7b96f0;
-  --color-primary-hover: #9eb0f5;
+  --color-primary: #6B8AE0;
+  --color-primary-hover: #8BA4EA;
   --color-primary-highlight: #1a2244;
 
   --cat-mentalidad: #a89bff;
@@ -123,8 +123,8 @@
     --color-text: #e6e5e2;
     --color-text-muted: #a09e9a;
     --color-text-faint: #5a5956;
-    --color-primary: #7b96f0;
-    --color-primary-hover: #9eb0f5;
+    --color-primary: #6B8AE0;
+    --color-primary-hover: #8BA4EA;
     --color-primary-highlight: #1a2244;
     --cat-mentalidad: #a89bff;
     --cat-negocios: #5dc493;
