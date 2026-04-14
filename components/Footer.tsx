@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { CATEGORIAS, CATEGORIA_SLUGS } from "@/lib/categorias"
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -7,18 +6,31 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container">
         <div className="footer-main">
+
+          {/* Marca */}
           <div className="footer-brand">
             <p className="footer-copy">
-              © {year} <strong>Gabriel García Acosta</strong> · A Coruña, Galicia
+              © {year} <strong>Gabriel García Acosta</strong>
             </p>
-            <p className="footer-copy">Empecé esto con 13 años.</p>
+            <p className="footer-copy">A Coruña, Galicia</p>
+            <p className="footer-copy footer-copy--faint">Empecé esto con 13 años.</p>
           </div>
-          <nav className="footer-nav" aria-label="Secciones del blog">
-            {CATEGORIA_SLUGS.map((slug) => (
-              <Link key={slug} href={`/${slug}`} className="footer-nav-link">
-                {CATEGORIAS[slug]?.nombre}
-              </Link>
-            ))}
+
+          {/* Columna 1 */}
+          <nav className="footer-col" aria-label="Sección pensar y decisiones">
+            <Link href="/mentalidad" className="footer-nav-link">Pensar diferente</Link>
+            <Link href="/decisiones" className="footer-nav-link">Decisiones &amp; errores</Link>
+            <Link href="/habilidades" className="footer-nav-link">Habilidades prácticas</Link>
+          </nav>
+
+          {/* Columna 2 */}
+          <nav className="footer-col" aria-label="Sección negocios e inversiones">
+            <Link href="/negocios" className="footer-nav-link">Negocios reales</Link>
+            <Link href="/inversiones" className="footer-nav-link">Inversiones</Link>
+          </nav>
+
+          {/* Columna 3 */}
+          <nav className="footer-col" aria-label="Sobre y RSS">
             <Link href="/sobre" className="footer-nav-link">Sobre mí</Link>
             <a href="/feed.xml" className="footer-nav-link footer-rss" aria-label="RSS Feed">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -27,6 +39,7 @@ export default function Footer() {
               RSS
             </a>
           </nav>
+
         </div>
       </div>
     </footer>
