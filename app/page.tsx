@@ -1,7 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { getSortedPosts, formatDate } from "@/lib/posts"
-import { CATEGORIAS } from "@/lib/categorias"
+import { getSortedPosts, formatDate, getPostCountByCategoria } from "@/lib/posts"
+import { CATEGORIAS, CATEGORIA_SLUGS } from "@/lib/categorias"
 
 export const metadata: Metadata = {
   title: "Gabriel García Acosta — Aprendiendo a pensar diferente",
@@ -12,6 +12,7 @@ export default function Home() {
   const posts = getSortedPosts()
   const featured = posts[0]
   const rest = posts.slice(1, 5)
+  const counts = getPostCountByCategoria()
 
   return (
     <>
@@ -116,6 +117,40 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      <section className="section divider-top" aria-labelledby="explore-heading">
+        <div className="container">
+          <div className="section-header">
+            <h2 className="section-title" id="explore-heading">Explora por tema</h2>
+            <span className="section-meta">5 secciones</span>
+          </div>
+
+          <ul className="explore-grid" role="list">
+            {CATEGORIA_SLUGS.map((slug) => {
+              const cat = CATEGORIAS[slug]
+              const count = counts[slug] ?? 0
+              return (
+                <li key={slug}>
+                  <Link
+                    href={`/${slug}`}
+                    className="explore-card"
+                    style={{ "--cat-color": `var(--cat-${slug})` } as React.CSSProperties}
+                  >
+                    <span className="explore-icon" aria-hidden="true">{cat.icono}</span>
+                    <div className="explore-body">
+                      <h3 className="explore-name">{cat.nombre}</h3>
+                      <p className="explore-desc">{cat.descripcion.split(".")[0]}.</p>
+                    </div>
+                    <span className="explore-count">
+                      {count} {count === 1 ? "entrada" : "entradas"}
+                    </span>
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </section>
 
       <script
         type="application/ld+json"
