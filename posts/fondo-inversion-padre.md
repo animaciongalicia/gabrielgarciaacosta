@@ -2,7 +2,6 @@
 title: "Mi padre me abrió un fondo en 2018 y ahora entiendo por qué"
 date: "2026-04-11"
 categoria: "inversiones"
-serie: "fondo-padre"
 resumen: "En total hemos metido 5.000€. Pero hoy el fondo vale 8.000€. Me he sentado con mi padre a que me explique cómo puede estar pasando eso."
 imagen: "/og/fondo.jpg"
 keywords: ["interés compuesto", "fondo inversión", "ahorro adolescente", "largo plazo", "empezar pronto"]
