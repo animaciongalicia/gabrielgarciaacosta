@@ -2,7 +2,6 @@
 title: "Las palabras que aprendo viendo trabajar a mi padre"
 date: "2026-04-13"
 categoria: "habilidades"
-serie: "padre-trabajando"
 resumen: "CTR, conversión, lead, margen, cliente. No aparecen en ningún libro de texto. Pero llevo años oyéndolas en el salón de casa. Y empiezo a entenderlas sin haberlas estudiado."
 imagen: "/og/habilidades-vocabulario.jpg"
 keywords: ["vocabulario negocios", "aprender observando", "CTR conversión lead", "habilidades blandas"]
