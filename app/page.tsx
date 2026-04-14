@@ -152,6 +152,30 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section divider-top" aria-labelledby="about-mini-heading">
+        <div className="container">
+          <Link href="/sobre" className="home-about-mini">
+            <div className="home-about-avatar" aria-hidden="true">G</div>
+            <div className="home-about-body">
+              <span className="home-about-eyebrow">Sobre mí</span>
+              <h2 className="home-about-title" id="about-mini-heading">
+                Soy Gabriel. Tengo 13 años y escribo desde A Coruña.
+              </h2>
+              <p className="home-about-text">
+                Este blog es un diario de aprendizaje. Sobre negocios, decisiones e inversiones.
+                No para parecer listo. Para recordar, dentro de años, cómo pensaba ahora.
+              </p>
+              <span className="home-about-cta">
+                Quién soy y por qué escribo
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
