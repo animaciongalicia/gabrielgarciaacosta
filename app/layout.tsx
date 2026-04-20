@@ -38,6 +38,9 @@ export const metadata: Metadata = {
     index: true, follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
+  verification: {
+    google: 'wGl_EUZ-1ftFjWCwItIKVOFTkg9uFw2iMqNPzh7sdj4',
+  },
   alternates: {
     canonical: BASE,
     types: { 'application/rss+xml': `${BASE}/feed.xml` },
@@ -48,6 +51,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
+        {/* Google Analytics (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BYZWPT8T90" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BYZWPT8T90');`,
+          }}
+        />
         {/* Previene FOUC en dark mode antes de que React hidrate */}
         <script
           dangerouslySetInnerHTML={{
